@@ -1,0 +1,5 @@
+<resources>
+    <bool name="application_debug">true</bool>
+    <string name="application_preferences_tennis_md5">tennis_md5</string>
+    <string name="application_preferences_availabilities_md5">availabilities_md5</string>
+</resources>

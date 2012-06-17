@@ -1,0 +1,4 @@
+<resources>
+    <string name="webservice_tennis_url">http://paristennis.heroku.com/api/tennis</string>
+    <string name="webservice_availabilites_url">http://paristennis.heroku.com/api/availabilities</string>
+</resources>

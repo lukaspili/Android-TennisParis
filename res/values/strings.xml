@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Tennis Paris</string>
+
+    <string name="tab_map">Carte</string>
+    <string name="tab_list">Liste</string>
+    <string name="tab_favorites">Fav</string>
+
+    <string name="tennis_map_menu_location">Localisation</string>
+    <string name="tennis_map_menu_login">Connexion / Inscription</string>
+
+    <string name="tennis_map_error_current_location">Impossible de localiser votre position courante.</string>
+    <string name="tennis_map_error_location">Impossible de localiser "%1$s".</string>
+</resources>
