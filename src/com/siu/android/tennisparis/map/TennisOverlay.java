@@ -1,6 +1,7 @@
 package com.siu.android.tennisparis.map;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import com.google.android.maps.MapView;
 import com.readystatesoftware.mapviewballoons.BalloonItemizedOverlay;
 import com.readystatesoftware.mapviewballoons.BalloonOverlayView;
 import com.siu.android.tennisparis.R;
+import com.siu.android.tennisparis.app.activity.TennisDetailActivity;
 import com.siu.android.tennisparis.dao.model.Tennis;
 
 import java.util.ArrayList;
@@ -57,7 +59,9 @@ public class TennisOverlay extends BalloonItemizedOverlay<TennisOverlayItem> {
 
     @Override
     protected boolean onBalloonTap(int index, TennisOverlayItem tennisOverlayItem) {
-        Toast.makeText(getMapView().getContext(), currentFocusedItem.getTitle(), Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(getMapView().getContext(), TennisDetailActivity.class);
+        intent.putExtra(TennisDetailActivity.EXTRA_TENNIS, currentFocusedItem.getTennis());
+        getMapView().getContext().startActivity(intent);
         return true;
     }
 

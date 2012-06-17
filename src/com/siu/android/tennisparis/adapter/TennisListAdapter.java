@@ -1,4 +1,4 @@
-package com.siu.android.tennisparis.list;
+package com.siu.android.tennisparis.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -39,7 +39,7 @@ public class TennisListAdapter extends ArrayAdapter<Tennis> {
         Tennis tennis = getItem(position);
 
         viewHolder.name.setText(tennis.getName());
-        viewHolder.address.setText(tennis.getAddress() + ", " + tennis.getPostalCode());
+        viewHolder.address.setText(tennis.getFullAddress());
 
         return row;
     }

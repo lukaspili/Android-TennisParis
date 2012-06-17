@@ -4,6 +4,7 @@ package com.siu.android.tennisparis.dao.model;
 
 // KEEP INCLUDES - put your custom includes here
 // KEEP INCLUDES END
+
 /**
  * Entity mapped to table TENNIS.
  */
@@ -114,6 +115,9 @@ public class Tennis implements java.io.Serializable {
     }
 
     // KEEP METHODS - put your custom methods here
+    public String getFullAddress() {
+        return address + ", " + postalCode;
+    }
     // KEEP METHODS END
 
 }

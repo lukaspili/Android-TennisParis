@@ -11,7 +11,7 @@ import java.lang.reflect.Type;
  */
 public class TennisDeserializer implements JsonDeserializer<Tennis> {
 
-    private static final String WEBSERVICE_ID = "webservice_id";
+    private static final String WEBSERVICE_ID = "id";
     private static final String LATITUDE = "latitude";
     private static final String LONGITUDE = "longitude";
     private static final String NAME = "name";

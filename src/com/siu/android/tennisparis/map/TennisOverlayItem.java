@@ -13,7 +13,7 @@ public class TennisOverlayItem extends OverlayItem {
 
     public TennisOverlayItem(Tennis tennis) {
         super(LocationUtils.getGeoPoint(tennis.getLatitude(), tennis.getLongitude()), tennis.getName(),
-                tennis.getAddress() + ", " + tennis.getPostalCode());
+                tennis.getFullAddress());
         this.tennis = tennis;
     }
 

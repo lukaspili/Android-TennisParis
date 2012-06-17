@@ -1,6 +1,6 @@
 package com.siu.android.tennisparis.app.activity;
 
-import android.content.*;
+import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,7 +18,7 @@ import com.google.android.apps.analytics.easytracking.EasyTracker;
 import com.google.android.maps.GeoPoint;
 import com.siu.android.tennisparis.R;
 import com.siu.android.tennisparis.dao.model.Tennis;
-import com.siu.android.tennisparis.list.TennisListAdapter;
+import com.siu.android.tennisparis.adapter.TennisListAdapter;
 import com.siu.android.tennisparis.map.EnhancedMapView;
 import com.siu.android.tennisparis.map.TennisOverlay;
 import com.siu.android.tennisparis.task.CurrentLocationTask;
@@ -331,17 +331,12 @@ public class TennisMapActivity extends SherlockMapActivity {
     private void initList() {
         listAdapter = new TennisListAdapter(this, tennises);
         listView.setAdapter(listAdapter);
-
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Tennis center = (Tennis) listView.getItemAtPosition(i);
-
-//                Intent intent = new Intent(TennisMapActivity.this, CenterDetailMapActivity.class);
-//                intent.putExtra(CenterDetailMapActivity.EXTRA_CENTER, center);
-//
-//                startActivity(intent);
+                Intent intent = new Intent(TennisMapActivity.this, TennisDetailActivity.class);
+                intent.putExtra(TennisDetailActivity.EXTRA_TENNIS, listAdapter.getItem(i));
+                startActivity(intent);
             }
         });
     }
