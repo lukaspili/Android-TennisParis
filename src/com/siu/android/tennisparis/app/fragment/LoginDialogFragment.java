@@ -16,6 +16,8 @@ import com.siu.android.tennisparis.R;
  */
 public class LoginDialogFragment extends SherlockDialogFragment {
 
+    public static final String EXTRA_AVAILABILITY = "extra_availability";
+
     private EditText loginEditText;
     private EditText passwordEditText;
     private CheckBox rememberCheckBox;

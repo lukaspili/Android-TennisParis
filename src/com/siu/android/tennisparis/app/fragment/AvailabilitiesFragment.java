@@ -1,6 +1,7 @@
 package com.siu.android.tennisparis.app.fragment;
 
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,9 +10,11 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.siu.android.tennisparis.R;
+import com.siu.android.tennisparis.Session;
 import com.siu.android.tennisparis.adapter.AvailabilityListAdapter;
 import com.siu.android.tennisparis.dao.model.Availability;
 import com.siu.android.tennisparis.util.DateUtils;
+import com.siu.android.tennisparis.util.FragmentUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +60,17 @@ public class AvailabilitiesFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Availability availability = availabilityListAdapter.getItem(i);
 
+                if (!Session.getInstance().isLogged()) {
+                    Bundle args = new Bundle();
+                    args.putSerializable(LoginDialogFragment.EXTRA_AVAILABILITY, availability);
+                    DialogFragment fragment = new LoginDialogFragment();
+                    fragment.setArguments(args);
+
+                    FragmentUtils.showDialog(getFragmentManager(), fragment);
+                    return;
+                }
             }
         });
     }

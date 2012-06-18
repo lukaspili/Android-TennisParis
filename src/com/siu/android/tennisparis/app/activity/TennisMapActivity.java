@@ -27,6 +27,7 @@ import com.siu.android.tennisparis.map.TennisOverlay;
 import com.siu.android.tennisparis.task.CurrentLocationTask;
 import com.siu.android.tennisparis.task.TennisLoadTask;
 import com.siu.android.tennisparis.toast.AppToast;
+import com.siu.android.tennisparis.util.FragmentUtils;
 import com.siu.android.tennisparis.util.LocationUtils;
 
 import java.util.ArrayList;
@@ -154,15 +155,7 @@ public class TennisMapActivity extends SherlockFragmentActivity {
                 break;
 
             case R.id.menu_login:
-                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                Fragment prev = getSupportFragmentManager().findFragmentByTag("dialog");
-                if (prev != null) {
-                    ft.remove(prev);
-                }
-                ft.addToBackStack(null);
-
-                DialogFragment newFragment = new LoginDialogFragment();
-                newFragment.show(ft, "LoginDialog");
+                FragmentUtils.showDialog(getSupportFragmentManager(), new LoginDialogFragment());
                 break;
 
             default:
