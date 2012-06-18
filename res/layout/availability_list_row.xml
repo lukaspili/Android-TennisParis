@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent" android:layout_height="wrap_content"
+              android:paddingTop="5dip" android:paddingBottom="5dip"
+              android:orientation="vertical">
+
+    <LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
+                  android:orientation="vertical"
+                  android:background="@drawable/customshape">
+
+        <TextView android:id="@+id/availability_list_row_hour"
+                  android:layout_width="fill_parent" android:layout_height="wrap_content"
+                  android:gravity="center_horizontal"
+                  android:textSize="17sp"
+                  android:textColor="@android:color/white"
+                  android:text="Hour range"/>
+
+        <TextView android:id="@+id/availability_list_row_court"
+                  android:layout_width="fill_parent" android:layout_height="wrap_content"
+                  android:gravity="center_horizontal"
+                  android:textSize="13sp"
+                  android:textColor="@android:color/white"
+                  android:text="Court"
+                />
+    </LinearLayout>
+
+</LinearLayout>

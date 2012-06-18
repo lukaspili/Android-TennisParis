@@ -3,17 +3,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="fill_parent" android:layout_height="fill_parent"
               android:orientation="vertical"
-              android:padding="15dip">
+              android:paddingLeft="15dip" android:paddingRight="15dip">
 
 
-    <TextView android:id="@+id/tennis_court_fragment_title"
+    <TextView android:id="@+id/availabilities_fragment_title"
               android:layout_width="fill_parent" android:layout_height="wrap_content"
               android:layout_centerHorizontal="true"
               android:gravity="center"
               android:textSize="17sp"
               android:text="Court"/>
 
-    <ListView android:id="@+id/tennis_court_fragment_list"
+    <ListView android:id="@+id/availabilities_fragment_list"
               android:layout_width="fill_parent" android:layout_height="fill_parent"/>
 
 </LinearLayout>

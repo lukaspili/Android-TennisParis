@@ -11,4 +11,9 @@
 
     <string name="tennis_map_error_current_location">Impossible de localiser votre position courante.</string>
     <string name="tennis_map_error_location">Impossible de localiser "%1$s".</string>
+
+    <string name="tennis_detail_menu_fav_disabled">Ajouter aux favoris</string>
+    <string name="tennis_detail_menu_fav_enabled">Supprimer des favoris</string>
+
+    <string name="availability_hour_range">%1$sh -> %2$sh</string>
 </resources>

@@ -16,18 +16,46 @@
               android:textSize="18sp"
               android:text="Adress"/>
 
-    <LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
+    <LinearLayout android:id="@+id/tennis_detail_activity_viewpager_layout"
+                  android:layout_width="fill_parent" android:layout_height="fill_parent"
+                  android:paddingTop="20dip"
                   android:orientation="vertical"
                   android:layout_below="@id/tennis_detail_activity_address">
+
+        <TextView android:layout_width="fill_parent" android:layout_height="wrap_content"
+                  android:gravity="center_horizontal"
+                  android:textSize="17sp"
+                  android:text="Disponibilités sur les prochains jours"/>
+
+
+
+        <com.viewpagerindicator.CirclePageIndicator android:id="@+id/tennis_detail_activity_indicator"
+                                                    android:layout_width="fill_parent" android:layout_height="wrap_content"
+                                                    android:paddingTop="2dip" android:paddingBottom="15dip"/>
 
         <android.support.v4.view.ViewPager android:id="@+id/tennis_detail_activity_pager"
                                            android:layout_width="fill_parent" android:layout_height="0dp"
                                            android:layout_weight="1"/>
 
-        <com.viewpagerindicator.CirclePageIndicator android:id="@+id/tennis_detail_activity_indicator"
-                                                    android:layout_width="fill_parent" android:layout_height="wrap_content"
-                                                    android:padding="10dip"/>
-
     </LinearLayout>
+
+    <ScrollView android:id="@+id/tennis_detail_activity_empty"
+                android:layout_width="fill_parent" android:layout_height="fill_parent"
+                android:visibility="gone">
+
+        <LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
+                      android:orientation="vertical"
+                      android:layout_gravity="center">
+
+            <ImageView android:layout_width="fill_parent" android:layout_height="fill_parent"
+                       android:layout_marginBottom="10dip"
+                       android:src="@drawable/im_warning"/>
+
+            <TextView android:layout_width="fill_parent" android:layout_height="wrap_content"
+                      android:gravity="center"
+                      android:text="Aucune disponibilité trouvée pour ce tennis pour les prochains jours. Revenez plus tard !"/>
+
+        </LinearLayout>
+    </ScrollView>
 
 </RelativeLayout>

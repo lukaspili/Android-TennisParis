@@ -184,6 +184,8 @@ public class TennisMapActivity extends SherlockMapActivity {
 
     private void startTennisUpdate() {
         stopTennisUpdateIfRunning();
+        setSupportProgressBarIndeterminateVisibility(true)
+        ;
         tennisUpdateRunnable = new Runnable() {
             @Override
             public void run() {
@@ -209,6 +211,7 @@ public class TennisMapActivity extends SherlockMapActivity {
     }
 
     public void onTennisUpdateTaskFinish(boolean progressCalled) {
+        setSupportProgressBarIndeterminateVisibility(false);
         if (!progressCalled) {
             startTennisLoading();
         }
@@ -216,6 +219,7 @@ public class TennisMapActivity extends SherlockMapActivity {
         tennisUpdateTask = null;
         tennisUpdateHandler.postDelayed(tennisUpdateRunnable, 1000 * 60 * 30);
     }
+
 
 //    private void initAndBindService() {
 //        tennisUpdaterServiceConnection = new ServiceConnection() {
@@ -244,6 +248,8 @@ public class TennisMapActivity extends SherlockMapActivity {
 
     private void initActionBar() {
         ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(false);
+        actionBar.setHomeButtonEnabled(false);
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
         ActionBar.Tab tab = actionBar.newTab();
@@ -345,10 +351,12 @@ public class TennisMapActivity extends SherlockMapActivity {
     /* Current Location */
 
     public void onCurrentLocationSuccess(Location location) {
+        setSupportProgressBarIndeterminateVisibility(false);
         locatePositionOnMap(LocationUtils.getGeoPoint(location));
     }
 
     public void onCurrentLocationFailure() {
+        setSupportProgressBarIndeterminateVisibility(false);
         new AppToast(TennisMapActivity.this, R.string.tennis_map_error_current_location).show();
     }
 

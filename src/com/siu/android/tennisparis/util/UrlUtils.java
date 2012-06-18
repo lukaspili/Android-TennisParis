@@ -1,7 +1,11 @@
 package com.siu.android.tennisparis.util;
 
 import android.util.Log;
+import org.apache.commons.io.IOUtils;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -23,5 +27,41 @@ public final class UrlUtils {
         }
 
         return url;
+    }
+
+    public static String downloadData(String urlAsString) {
+        URL url = getUrl(urlAsString);
+
+        if (null == url) {
+            Log.e(UrlUtils.class.getName(), "Invalid URL : " + urlAsString);
+            return null;
+        }
+
+        InputStream is = null;
+        String data;
+
+        try {
+            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setUseCaches(false);
+            urlConnection.setConnectTimeout(15 * 1000);
+
+            Log.d(UrlUtils.class.getName(), "Connection opened to : " + urlAsString);
+            long time = System.currentTimeMillis();
+
+            urlConnection.connect();
+            is = urlConnection.getInputStream();
+            data = IOUtils.toString(is);
+
+            Log.d(UrlUtils.class.getName(), "Content downloaded in " + (System.currentTimeMillis() - time) + " ms");
+
+        } catch (IOException e) {
+            Log.e(UrlUtils.class.getName(), "Error during reading connection stream : " + e.getMessage());
+            return null;
+
+        } finally {
+            IOUtils.closeQuietly(is);
+        }
+
+        return data;
     }
 }
