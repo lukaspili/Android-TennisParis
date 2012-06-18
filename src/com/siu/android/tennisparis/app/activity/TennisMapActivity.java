@@ -3,13 +3,15 @@ package com.siu.android.tennisparis.app.activity;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
-import android.os.Handler;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.app.SherlockMapActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
@@ -17,13 +19,13 @@ import com.actionbarsherlock.view.Window;
 import com.google.android.apps.analytics.easytracking.EasyTracker;
 import com.google.android.maps.GeoPoint;
 import com.siu.android.tennisparis.R;
-import com.siu.android.tennisparis.dao.model.Tennis;
 import com.siu.android.tennisparis.adapter.TennisListAdapter;
+import com.siu.android.tennisparis.app.fragment.LoginDialogFragment;
+import com.siu.android.tennisparis.dao.model.Tennis;
 import com.siu.android.tennisparis.map.EnhancedMapView;
 import com.siu.android.tennisparis.map.TennisOverlay;
 import com.siu.android.tennisparis.task.CurrentLocationTask;
 import com.siu.android.tennisparis.task.TennisLoadTask;
-import com.siu.android.tennisparis.task.TennisUpdateTask;
 import com.siu.android.tennisparis.toast.AppToast;
 import com.siu.android.tennisparis.util.LocationUtils;
 
@@ -34,16 +36,12 @@ import java.util.List;
  * @author Lukasz Piliszczuk <lukasz.pili AT gmail.com>
  */
 @SuppressWarnings("deprecation")
-public class TennisMapActivity extends SherlockMapActivity {
+public class TennisMapActivity extends SherlockFragmentActivity {
 
     private EnhancedMapView mapView;
     private ListView listView;
     private TennisListAdapter listAdapter;
 
-    private Runnable tennisUpdateRunnable;
-    private Handler tennisUpdateHandler = new Handler();
-
-    private TennisUpdateTask tennisUpdateTask;
     private CurrentLocationTask currentLocationTask;
     private TennisLoadTask tennisLoadTask;
 
@@ -64,7 +62,7 @@ public class TennisMapActivity extends SherlockMapActivity {
 
         initActionBar();
 
-        RetainInstance retainInstance = (RetainInstance) getLastNonConfigurationInstance();
+        RetainInstance retainInstance = (RetainInstance) getLastCustomNonConfigurationInstance();
         if (null != retainInstance) {
             tennises = (ArrayList<Tennis>) savedInstanceState.getSerializable("tennises");
             getSupportActionBar().setSelectedNavigationItem(savedInstanceState.getInt("tab"));
@@ -81,15 +79,9 @@ public class TennisMapActivity extends SherlockMapActivity {
                 setSupportProgressBarIndeterminateVisibility(true);
             }
 
-            if (null != retainInstance.tennisUpdateTask) {
-                tennisUpdateTask = retainInstance.tennisUpdateTask;
-                tennisUpdateTask.setActivity(this);
-            }
-
         } else {
             tennises = new ArrayList<Tennis>();
 
-            startTennisUpdate();
             startTennisLoading();
 
             currentLocationTask = new CurrentLocationTask(this);
@@ -121,13 +113,11 @@ public class TennisMapActivity extends SherlockMapActivity {
 
         if (isFinishing()) {
             currentLocationTask.stopCurrentLocation();
-            stopTennisLoadingIfRunning();
-            stopTennisUpdateIfRunning();
         }
     }
 
     @Override
-    public Object onRetainNonConfigurationInstance() {
+    public Object onRetainCustomNonConfigurationInstance() {
         RetainInstance retainInstance = new RetainInstance();
 
         currentLocationTask.setActivity(null);
@@ -136,11 +126,6 @@ public class TennisMapActivity extends SherlockMapActivity {
         if (null != tennisLoadTask) {
             tennisLoadTask.setActivity(null);
             retainInstance.tennisLoadTask = tennisLoadTask;
-        }
-
-        if (null != tennisUpdateTask) {
-            tennisUpdateTask.setActivity(null);
-            retainInstance.tennisUpdateTask = tennisUpdateTask;
         }
 
         EasyTracker.getTracker().trackActivityRetainNonConfigurationInstance();
@@ -164,13 +149,20 @@ public class TennisMapActivity extends SherlockMapActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_location:
-                stopTennisLoadingIfRunning();
                 currentLocationTask.startCurrentLocation();
                 setSupportProgressBarIndeterminateVisibility(true);
                 break;
 
             case R.id.menu_login:
-//                startActivity(new Intent(this, InfosActivity.class));
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                Fragment prev = getSupportFragmentManager().findFragmentByTag("dialog");
+                if (prev != null) {
+                    ft.remove(prev);
+                }
+                ft.addToBackStack(null);
+
+                DialogFragment newFragment = new LoginDialogFragment();
+                newFragment.show(ft, "LoginDialog");
                 break;
 
             default:
@@ -179,72 +171,6 @@ public class TennisMapActivity extends SherlockMapActivity {
 
         return true;
     }
-
-    /* Tennis update */
-
-    private void startTennisUpdate() {
-        stopTennisUpdateIfRunning();
-        setSupportProgressBarIndeterminateVisibility(true)
-        ;
-        tennisUpdateRunnable = new Runnable() {
-            @Override
-            public void run() {
-                tennisUpdateTask = new TennisUpdateTask(TennisMapActivity.this);
-                tennisUpdateTask.execute();
-            }
-        };
-
-        tennisUpdateHandler.post(tennisUpdateRunnable);
-    }
-
-    private void stopTennisUpdateIfRunning() {
-        if (null == tennisUpdateTask) {
-            return;
-        }
-
-        tennisUpdateTask.cancel(true);
-        tennisUpdateTask = null;
-    }
-
-    public void onTennisUpdateTaskProgress() {
-        startTennisLoading();
-    }
-
-    public void onTennisUpdateTaskFinish(boolean progressCalled) {
-        setSupportProgressBarIndeterminateVisibility(false);
-        if (!progressCalled) {
-            startTennisLoading();
-        }
-
-        tennisUpdateTask = null;
-        tennisUpdateHandler.postDelayed(tennisUpdateRunnable, 1000 * 60 * 30);
-    }
-
-
-//    private void initAndBindService() {
-//        tennisUpdaterServiceConnection = new ServiceConnection() {
-//            @Override
-//            public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
-//            }
-//
-//            @Override
-//            public void onServiceDisconnected(ComponentName componentName) {
-//            }
-//        };
-//
-//        tennisUpdaterBroadcastReceiver = new BroadcastReceiver() {
-//            @Override
-//            public void onReceive(Context context, Intent intent) {
-//                Log.d(getClass().getName(), "TennisUpdaterBroadcastReceiver");
-//                if (tennises.isEmpty()) {
-//                    startTennisLoading();
-//                }
-//            }
-//        };
-//
-//        registerReceiver(tennisUpdaterBroadcastReceiver, new IntentFilter(Intent.ACTION_EDIT));
-//        Application.getContext().bindService(new Intent(this, TennisUpdaterService.class), tennisUpdaterServiceConnection, BIND_AUTO_CREATE);
-//    }
 
     private void initActionBar() {
         ActionBar actionBar = getSupportActionBar();
@@ -364,23 +290,21 @@ public class TennisMapActivity extends SherlockMapActivity {
     /* Tennis Location */
 
     private void startTennisLoading() {
-        stopTennisLoadingIfRunning();
         setSupportProgressBarIndeterminateVisibility(true);
-
         tennisLoadTask = new TennisLoadTask(this);
         tennisLoadTask.execute();
     }
 
-    private void stopTennisLoadingIfRunning() {
-        if (null == tennisLoadTask) {
-            return;
-        }
-
-        tennisLoadTask.cancel(true);
-        tennisLoadTask = null;
-
-        setSupportProgressBarIndeterminateVisibility(false);
-    }
+//    private void stopTennisLoadingIfRunning() {
+//        if (null == tennisLoadTask) {
+//            return;
+//        }
+//
+//        tennisLoadTask.cancel(true);
+//        tennisLoadTask = null;
+//
+//        setSupportProgressBarIndeterminateVisibility(false);
+//    }
 
     public void onTennisLoadTaskFinish(List<Tennis> receivedTennis) {
         setSupportProgressBarIndeterminateVisibility(false);
@@ -391,6 +315,7 @@ public class TennisMapActivity extends SherlockMapActivity {
         if (null == receivedTennis || receivedTennis.isEmpty()) {
             return;
         }
+
         tennises.clear();
         tennises.addAll(receivedTennis);
 
@@ -413,6 +338,5 @@ public class TennisMapActivity extends SherlockMapActivity {
     private static class RetainInstance {
         private CurrentLocationTask currentLocationTask;
         private TennisLoadTask tennisLoadTask;
-        private TennisUpdateTask tennisUpdateTask;
     }
 }

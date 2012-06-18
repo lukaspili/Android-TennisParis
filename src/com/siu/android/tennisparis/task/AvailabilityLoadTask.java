@@ -100,7 +100,7 @@ public class AvailabilityLoadTask extends AsyncTask<Void, Void, List<List<Availa
         List<Availability> availabilities = new ArrayList<Availability>();
         for (Iterator<Availability> it = availabilitiesFromWebservice.iterator(); it.hasNext(); ) {
             Availability availability = it.next();
-            if (availability.getWebserviceTennisId() == tennis.getWebserviceId()) {
+            if (tennis.getWebserviceId().equals(availability.getWebserviceTennisId())) {
                 availabilities.add(availability);
             }
         }

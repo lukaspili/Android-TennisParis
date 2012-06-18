@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent" android:layout_height="fill_parent">
+
+    <TextView android:id="@+id/login_dialog_fragment_title"
+              android:layout_width="fill_parent" android:layout_height="wrap_content"
+              android:layout_alignParentTop="true"
+              android:paddingLeft="5dip" android:paddingTop="5dip" android:paddingBottom="15dip"
+              android:textSize="22sp"
+              android:text="@string/login_dialog_title"/>
+
+    <LinearLayout android:id="@+id/login_dialog_fragment_buttons"
+                  android:layout_width="fill_parent" android:layout_height="wrap_content"
+                  android:layout_alignParentBottom="true">
+
+        <Button android:id="@+id/login_dialog_fragment_button_cancel"
+                android:layout_width="fill_parent" android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@android:string/cancel"/>
+
+        <Button android:id="@+id/login_dialog_fragment_button_submit"
+                android:layout_width="fill_parent" android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@android:string/ok"/>
+    </LinearLayout>
+
+    <ScrollView android:layout_width="fill_parent" android:layout_height="fill_parent"
+                android:layout_below="@id/login_dialog_fragment_title"
+                android:layout_above="@id/login_dialog_fragment_buttons">
+
+        <RelativeLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
+                        android:padding="10dip">
+
+            <TextView android:id="@+id/login_dialog_fragment_text"
+                      android:layout_width="fill_parent" android:layout_height="wrap_content"
+                      android:paddingBottom="10dip" android:paddingLeft="5dip" android:paddingRight="5dip"
+                      android:gravity="center"
+                      android:text="@string/login_dialog_text"/>
+
+            <EditText android:id="@+id/login_dialog_fragment_login"
+                      android:layout_width="fill_parent" android:layout_height="wrap_content"
+                      android:layout_below="@id/login_dialog_fragment_text"
+                      android:singleLine="true"
+                      android:hint="Identifiant"/>
+
+            <EditText android:id="@+id/login_dialog_fragment_password"
+                      android:layout_width="fill_parent" android:layout_height="wrap_content"
+                      android:layout_below="@id/login_dialog_fragment_login"
+                      android:singleLine="true"
+                      android:hint="Mot de passe"/>
+
+            <CheckBox android:id="@+id/login_dialog_fragment_remember_checkbox"
+                      android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:layout_below="@id/login_dialog_fragment_password"/>
+
+            <TextView android:id="@+id/login_dialog_fragment_remember_text"
+                      android:layout_width="fill_parent" android:layout_height="wrap_content"
+                      android:layout_toRightOf="@id/login_dialog_fragment_remember_checkbox"
+                      android:layout_alignBaseline="@id/login_dialog_fragment_remember_checkbox"
+                      android:paddingLeft="10dip"
+                      android:text="@string/login_dialog_remember"/>
+
+            <TextView android:layout_width="fill_parent" android:layout_height="wrap_content"
+                      android:layout_below="@id/login_dialog_fragment_remember_checkbox"
+                      android:paddingTop="10dip"
+                      android:text="@string/login_dialog_disclaimer" />
+
+        </RelativeLayout>
+    </ScrollView>
+
+
+</RelativeLayout>

@@ -16,4 +16,10 @@
     <string name="tennis_detail_menu_fav_enabled">Supprimer des favoris</string>
 
     <string name="availability_hour_range">%1$sh -> %2$sh</string>
+
+    <string name="login_dialog_title">Connectez-vous !</string>
+    <string name="login_dialog_text">Vous devez créer un compte sur paris.fr/tennis pour gérer vos réservations de court.</string>
+    <string name="login_dialog_remember">Connexion automatique</string>
+    <string name="login_dialog_disclaimer">L\'application Android Tennis Paris vous garantit qu\'aucune donnée personnelle de votre compte paris.fr n\'est enregistrée ni utilisée pour autre chose que la connexion au site paris.fr/tennis.</string>
+
 </resources>

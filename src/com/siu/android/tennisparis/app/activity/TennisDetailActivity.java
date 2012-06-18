@@ -1,6 +1,5 @@
 package com.siu.android.tennisparis.app.activity;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -14,14 +13,12 @@ import com.actionbarsherlock.view.Window;
 import com.siu.android.tennisparis.R;
 import com.siu.android.tennisparis.adapter.AvailabilitiesFragmentPagerAdapter;
 import com.siu.android.tennisparis.dao.model.Availability;
-import com.siu.android.tennisparis.dao.model.AvailabilityDao;
 import com.siu.android.tennisparis.dao.model.Tennis;
-import com.siu.android.tennisparis.database.DatabaseHelper;
 import com.siu.android.tennisparis.task.AvailabilityLoadTask;
-import com.siu.android.tennisparis.task.TennisUpdateTask;
 import com.viewpagerindicator.CirclePageIndicator;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Lukasz Piliszczuk <lukasz.pili AT gmail.com>
@@ -66,6 +63,7 @@ public class TennisDetailActivity extends SherlockFragmentActivity {
             availabilitiesPerDay = (ArrayList<List<Availability>>) savedInstanceState.get(EXTRA_AVAILABILITIES);
         } else {
             tennis = (Tennis) getIntent().getExtras().get(EXTRA_TENNIS);
+            availabilitiesPerDay = new ArrayList<List<Availability>>();
             loadAvailabilities();
         }
 
@@ -76,6 +74,7 @@ public class TennisDetailActivity extends SherlockFragmentActivity {
         }
 
         initTennis();
+        initViewPager();
     }
 
     @Override
@@ -148,7 +147,10 @@ public class TennisDetailActivity extends SherlockFragmentActivity {
             return;
         }
 
-        availabilitiesPerDay = loadedAvailabilitiesPerDay;
-        initViewPager();
+        availabilitiesPerDay.clear();
+        availabilitiesPerDay.addAll(loadedAvailabilitiesPerDay);
+
+        tennisCourtFragmentAdapter.notifyDataSetChanged();
+        circlePageIndicator.notifyDataSetChanged();
     }
 }
