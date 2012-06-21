@@ -1,12 +1,12 @@
 package com.actionbarsherlock.app;
 
-import android.app.ExpandableListActivity;
+import android.app.ListActivity;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
+import android.view.ViewGroup.LayoutParams;
 import com.actionbarsherlock.ActionBarSherlock;
 import com.actionbarsherlock.ActionBarSherlock.OnActionModeFinishedListener;
 import com.actionbarsherlock.ActionBarSherlock.OnActionModeStartedListener;
@@ -18,7 +18,7 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
-public abstract class SherlockExpandableListActivity extends ExpandableListActivity implements OnCreatePanelMenuListener, OnPreparePanelListener, OnMenuItemSelectedListener, OnActionModeStartedListener, OnActionModeFinishedListener {
+public abstract class SherlockListActivity extends ListActivity implements OnCreatePanelMenuListener, OnPreparePanelListener, OnMenuItemSelectedListener, OnActionModeStartedListener, OnActionModeFinishedListener {
     private ActionBarSherlock mSherlock;
 
     protected final ActionBarSherlock getSherlock() {
@@ -74,6 +74,12 @@ public abstract class SherlockExpandableListActivity extends ExpandableListActiv
     protected void onStop() {
         getSherlock().dispatchStop();
         super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        getSherlock().dispatchDestroy();
+        super.onDestroy();
     }
 
     @Override

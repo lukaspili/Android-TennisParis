@@ -1,8 +1,8 @@
 package com.actionbarsherlock.app;
 
+import android.app.ExpandableListActivity;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.preference.PreferenceActivity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
@@ -18,7 +18,7 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
-public abstract class SherlockPreferenceActivity extends PreferenceActivity implements OnCreatePanelMenuListener, OnPreparePanelListener, OnMenuItemSelectedListener, OnActionModeStartedListener, OnActionModeFinishedListener {
+public abstract class SherlockExpandableListActivity extends ExpandableListActivity implements OnCreatePanelMenuListener, OnPreparePanelListener, OnMenuItemSelectedListener, OnActionModeStartedListener, OnActionModeFinishedListener {
     private ActionBarSherlock mSherlock;
 
     protected final ActionBarSherlock getSherlock() {
@@ -74,6 +74,12 @@ public abstract class SherlockPreferenceActivity extends PreferenceActivity impl
     protected void onStop() {
         getSherlock().dispatchStop();
         super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        getSherlock().dispatchDestroy();
+        super.onDestroy();
     }
 
     @Override
