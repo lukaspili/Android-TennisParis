@@ -52,7 +52,8 @@
 
             <CheckBox android:id="@+id/login_dialog_fragment_remember_checkbox"
                       android:layout_width="wrap_content" android:layout_height="wrap_content"
-                      android:layout_below="@id/login_dialog_fragment_password"/>
+                      android:layout_below="@id/login_dialog_fragment_password"
+                      android:checked="true"/>
 
             <TextView android:id="@+id/login_dialog_fragment_remember_text"
                       android:layout_width="fill_parent" android:layout_height="wrap_content"
@@ -64,7 +65,7 @@
             <TextView android:layout_width="fill_parent" android:layout_height="wrap_content"
                       android:layout_below="@id/login_dialog_fragment_remember_checkbox"
                       android:paddingTop="10dip"
-                      android:text="@string/login_dialog_disclaimer" />
+                      android:text="@string/login_dialog_disclaimer"/>
 
         </RelativeLayout>
     </ScrollView>

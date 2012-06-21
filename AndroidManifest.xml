@@ -25,6 +25,7 @@
         </activity>
 
         <activity android:name=".app.activity.TennisDetailActivity"/>
+        <activity android:name=".app.activity.AccountActivity"/>
 
         <uses-library android:required="true" android:name="com.google.android.maps"/>
     </application>

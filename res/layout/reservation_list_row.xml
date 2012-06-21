@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent" android:layout_height="wrap_content"
+                android:paddingTop="10dip" android:paddingBottom="10dip">
+
+    <TextView android:id="@+id/reservation_list_row_title"
+              android:layout_width="wrap_content" android:layout_height="wrap_content"
+              android:textSize="20sp"
+              android:text="Title"/>
+
+    <TextView android:id="@+id/reservation_list_row_date"
+              android:layout_width="wrap_content" android:layout_height="wrap_content"
+              android:layout_below="@id/reservation_list_row_title"
+              android:textSize="12sp"
+              android:text="Date"/>
+
+    <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content"
+               android:layout_alignParentRight="true"
+               android:layout_centerVertical="true"
+               android:src="@drawable/ic_menu_about"/>
+
+</RelativeLayout>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent" android:layout_height="fill_parent">
+
+    <TextView android:id="@+id/reservation_dialog_tennis_title"
+              android:layout_width="fill_parent" android:layout_height="wrap_content"
+              android:layout_alignParentTop="true"
+              android:paddingLeft="5dip" android:paddingRight="5dip" android:paddingTop="5dip"
+              android:textSize="22sp"
+              android:text="Tennis name"/>
+
+    <TextView android:id="@+id/reservation_dialog_date"
+              android:layout_width="fill_parent" android:layout_height="wrap_content"
+              android:layout_below="@id/reservation_dialog_tennis_title"
+              android:paddingLeft="5dip" android:paddingRight="5dip"
+              android:layout_marginBottom="20dip"
+              android:textSize="16sp"
+              android:text="From 8 to 9"/>
+
+    <LinearLayout android:id="@+id/reservation_dialog_buttons"
+                  android:layout_width="fill_parent" android:layout_height="wrap_content"
+                  android:layout_alignParentBottom="true">
+
+        <Button android:id="@+id/reservation_dialog_buttons_cancel"
+                android:layout_width="fill_parent" android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@android:string/cancel"
+                android:visibility="gone"/>
+
+        <Button android:id="@+id/reservation_dialog_buttons_submit"
+                android:layout_width="fill_parent" android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@android:string/ok"/>
+    </LinearLayout>
+
+    <ScrollView android:layout_width="fill_parent" android:layout_height="fill_parent"
+                android:layout_below="@id/reservation_dialog_date"
+                android:layout_above="@id/reservation_dialog_buttons">
+
+        <LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
+                      android:paddingLeft="5dip" android:paddingRight="5dip"
+                      android:orientation="vertical">
+
+            <TextView android:id="@+id/reservation_dialog_address_label"
+                      android:layout_width="fill_parent" android:layout_height="wrap_content"
+                      android:textSize="15sp"
+                      android:textStyle="bold"
+                      android:text="Adresse :"/>
+
+            <TextView android:id="@+id/reservation_dialog_address"
+                      android:layout_width="fill_parent" android:layout_height="wrap_content"
+                      android:layout_marginBottom="10dip"
+                      android:textSize="15sp"
+                      android:text="77 rue notre dame des champs, 75006 Paris"/>
+
+            <TextView android:id="@+id/reservation_dialog_court_label"
+                      android:layout_width="fill_parent" android:layout_height="wrap_content"
+                      android:textSize="15sp"
+                      android:textStyle="bold"
+                      android:text="Court :"/>
+
+            <TextView android:id="@+id/reservation_dialog_court"
+                      android:layout_width="fill_parent" android:layout_height="wrap_content"
+                      android:layout_marginBottom="10dip"
+                      android:textSize="15sp"
+                      android:text="Court n. 1"/>
+
+            <TextView android:id="@+id/reservation_dialog_phone_label"
+                      android:layout_width="fill_parent" android:layout_height="wrap_content"
+                      android:textSize="15sp"
+                      android:textStyle="bold"
+                      android:text="Téléphone :"/>
+
+            <TextView android:id="@+id/reservation_dialog_phone"
+                      android:layout_width="fill_parent" android:layout_height="wrap_content"
+                      android:textSize="15sp"
+                      android:text="0123456789"/>
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

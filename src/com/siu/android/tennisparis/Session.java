@@ -33,4 +33,8 @@ public final class Session {
     public boolean isLogged() {
         return (null != user);
     }
+
+    public void destroy() {
+        user = null;
+    }
 }

@@ -1,5 +1,7 @@
 package com.siu.android.tennisparis.app.fragment;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -28,13 +30,16 @@ public class AvailabilitiesFragment extends Fragment {
 
     private ListView listView;
     private TextView titleTextView;
+    private AlertDialog reservationAlertDialog;
 
     private AvailabilityListAdapter availabilityListAdapter;
     private List<Availability> availabilities;
+    private Availability selectedAvailability;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRetainInstance(true);
         availabilities = (ArrayList<Availability>) getArguments().get(EXTRA_AVAILABILITIES);
     }
 
@@ -50,6 +55,11 @@ public class AvailabilitiesFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        initList();
+        initDialog();
+    }
+
+    private void initList() {
         titleTextView.setText(DateUtils.formatAsFull(availabilities.get(0).getDay()));
 
         availabilityListAdapter = new AvailabilityListAdapter(getActivity(), availabilities);
@@ -60,18 +70,36 @@ public class AvailabilitiesFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Availability availability = availabilityListAdapter.getItem(i);
-
                 if (!Session.getInstance().isLogged()) {
                     Bundle args = new Bundle();
-                    args.putSerializable(LoginDialogFragment.EXTRA_AVAILABILITY, availability);
                     DialogFragment fragment = new LoginDialogFragment();
                     fragment.setArguments(args);
 
                     FragmentUtils.showDialog(getFragmentManager(), fragment);
                     return;
                 }
+
+                selectedAvailability = availabilityListAdapter.getItem(i);
+                reservationAlertDialog.show();
             }
         });
+    }
+
+    private void initDialog() {
+        reservationAlertDialog = new AlertDialog.Builder(getActivity())
+                .setMessage(R.string.reservation_dialog_message)
+                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                })
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                })
+                .create();
     }
 }

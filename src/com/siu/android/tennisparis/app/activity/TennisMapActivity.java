@@ -3,22 +3,19 @@ package com.siu.android.tennisparis.app.activity;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.app.SherlockMapActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.Window;
 import com.google.android.apps.analytics.easytracking.EasyTracker;
 import com.google.android.maps.GeoPoint;
 import com.siu.android.tennisparis.R;
+import com.siu.android.tennisparis.Session;
 import com.siu.android.tennisparis.adapter.TennisListAdapter;
 import com.siu.android.tennisparis.app.fragment.LoginDialogFragment;
 import com.siu.android.tennisparis.dao.model.Tennis;
@@ -103,6 +100,15 @@ public class TennisMapActivity extends SherlockFragmentActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (tennises.isEmpty() && null == tennisLoadTask) {
+            startTennisLoading();
+        }
+    }
+
+    @Override
     protected void onStop() {
         super.onStop();
         EasyTracker.getTracker().trackActivityStop(this);
@@ -155,7 +161,12 @@ public class TennisMapActivity extends SherlockFragmentActivity {
                 break;
 
             case R.id.menu_login:
-                FragmentUtils.showDialog(getSupportFragmentManager(), new LoginDialogFragment());
+                if (!Session.getInstance().isLogged()) {
+                    FragmentUtils.showDialog(getSupportFragmentManager(), new LoginDialogFragment());
+                    return true;
+                }
+
+                startActivity(new Intent(this, AccountActivity.class));
                 break;
 
             default:
@@ -172,7 +183,7 @@ public class TennisMapActivity extends SherlockFragmentActivity {
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
         ActionBar.Tab tab = actionBar.newTab();
-        tab.setIcon(getResources().getDrawable(R.drawable.ic_menu_earth));
+        tab.setIcon(getResources().getDrawable(R.drawable.ic_menu_map));
         tab.setTabListener(new ActionBar.TabListener() {
             @Override
             public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
@@ -209,24 +220,27 @@ public class TennisMapActivity extends SherlockFragmentActivity {
         });
         actionBar.addTab(tab);
 
-        tab = actionBar.newTab();
-        tab.setIcon(getResources().getDrawable(R.drawable.ic_menu_favorites));
-        tab.setTabListener(new ActionBar.TabListener() {
-            @Override
-            public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
+        if (Session.getInstance().isLogged()) {
+            tab = actionBar.newTab();
+            tab.setIcon(getResources().getDrawable(R.drawable.ic_menu_favorites));
+            tab.setTabListener(new ActionBar.TabListener() {
+                @Override
+                public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
 
-            }
+                }
 
-            @Override
-            public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
+                @Override
+                public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
 
-            }
+                }
 
-            @Override
-            public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
-            }
-        });
-        actionBar.addTab(tab);
+                @Override
+                public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
+                }
+            });
+            actionBar.addTab(tab);
+        }
+
     }
 
     private void initMap() {
@@ -244,7 +258,7 @@ public class TennisMapActivity extends SherlockFragmentActivity {
             }
         });
 
-        tennisOverlay = new TennisOverlay(getResources().getDrawable(R.drawable.tennis_marker), mapView);
+        tennisOverlay = new TennisOverlay(getResources().getDrawable(R.drawable.ic_marker), mapView);
 
         if (!tennises.isEmpty()) {
             tennisOverlay.addTennises(tennises);
@@ -288,22 +302,9 @@ public class TennisMapActivity extends SherlockFragmentActivity {
         tennisLoadTask.execute();
     }
 
-//    private void stopTennisLoadingIfRunning() {
-//        if (null == tennisLoadTask) {
-//            return;
-//        }
-//
-//        tennisLoadTask.cancel(true);
-//        tennisLoadTask = null;
-//
-//        setSupportProgressBarIndeterminateVisibility(false);
-//    }
-
     public void onTennisLoadTaskFinish(List<Tennis> receivedTennis) {
         setSupportProgressBarIndeterminateVisibility(false);
         tennisLoadTask = null;
-
-        Log.d(getClass().getName(), "Tennises : " + receivedTennis.size());
 
         if (null == receivedTennis || receivedTennis.isEmpty()) {
             return;

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent" android:layout_height="fill_parent"
+                android:padding="5dip">
+
+    <TextView android:id="@+id/account_profile_name"
+              android:layout_width="fill_parent" android:layout_height="wrap_content"
+              android:textSize="26sp"
+              android:text="Firstname Lastname"/>
+
+    <TextView android:id="@+id/account_profile_address_label"
+              android:layout_width="fill_parent" android:layout_height="wrap_content"
+              android:layout_below="@id/account_profile_name"
+              android:layout_marginTop="20dip"
+              android:textSize="16sp"
+              android:textStyle="bold"
+              android:text="Addresse"/>
+
+    <TextView android:id="@+id/account_profile_address"
+              android:layout_width="fill_parent" android:layout_height="wrap_content"
+              android:layout_below="@id/account_profile_address_label"
+              android:textSize="16sp"
+              android:text="Address number and street, city and postal code"/>
+
+    <TextView android:id="@+id/account_profile_email_label"
+              android:layout_width="fill_parent" android:layout_height="wrap_content"
+              android:layout_below="@id/account_profile_address"
+              android:layout_marginTop="20dip"
+              android:textSize="16sp"
+              android:textStyle="bold"
+              android:text="Email"/>
+
+    <TextView android:id="@+id/account_profile_email"
+              android:layout_width="fill_parent" android:layout_height="wrap_content"
+              android:layout_below="@id/account_profile_email_label"
+              android:textSize="16sp"
+              android:text="email@email.com"/>
+
+    <TextView android:id="@+id/account_profile_phone_label"
+              android:layout_width="fill_parent" android:layout_height="wrap_content"
+              android:layout_below="@id/account_profile_email"
+              android:layout_marginTop="20dip"
+              android:textSize="16sp"
+              android:textStyle="bold"
+              android:text="Téléphone mobile"/>
+
+    <TextView android:id="@+id/account_profile_phone"
+              android:layout_width="fill_parent" android:layout_height="wrap_content"
+              android:layout_below="@id/account_profile_phone_label"
+              android:textSize="16sp"
+              android:text="0123456789"/>
+
+</RelativeLayout>

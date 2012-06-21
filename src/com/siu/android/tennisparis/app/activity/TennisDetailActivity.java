@@ -78,6 +78,15 @@ public class TennisDetailActivity extends SherlockFragmentActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (availabilitiesPerDay.isEmpty() && null == availabilityLoadTask) {
+            loadAvailabilities();
+        }
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getSupportMenuInflater().inflate(R.menu.tennis_detail_menu, menu);
         return true;
@@ -111,6 +120,7 @@ public class TennisDetailActivity extends SherlockFragmentActivity {
 
     private void initActionBar() {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
 
     private void initTennis() {

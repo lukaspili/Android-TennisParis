@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent" android:layout_height="fill_parent"
+                android:padding="7dip">
+
+    <TextView android:id="@+id/account_reservation_current_label"
+              android:layout_width="fill_parent" android:layout_height="wrap_content"
+              android:textSize="17sp"
+              android:textStyle="bold"
+              android:text="Réservation en cours"/>
+
+    <RelativeLayout android:id="@+id/account_reservation_current"
+                    android:layout_width="fill_parent" android:layout_height="wrap_content"
+                    android:layout_below="@id/account_reservation_current_label"
+                    android:layout_marginTop="5dip">
+
+        <TextView android:id="@+id/account_reservation_current_title"
+                  android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:textSize="20sp"
+                  android:text="Title"/>
+
+        <TextView android:id="@+id/account_reservation_current_date"
+                  android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:layout_below="@id/account_reservation_current_title"
+                  android:textSize="12sp"
+                  android:text="Date"/>
+
+        <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                   android:layout_alignParentRight="true"
+                   android:layout_centerVertical="true"
+                   android:src="@drawable/ic_menu_about"/>
+    </RelativeLayout>
+
+    <TextView android:id="@+id/account_reservation_past_label"
+              android:layout_width="fill_parent" android:layout_height="wrap_content"
+              android:layout_below="@id/account_reservation_current"
+              android:layout_marginTop="10dip"
+              android:textSize="17sp"
+              android:textStyle="bold"
+              android:text="Réservations passées"/>
+
+    <ListView android:id="@+id/account_reservation_past_list"
+              android:layout_width="fill_parent" android:layout_height="fill_parent"
+              android:layout_below="@id/account_reservation_past_label"/>
+
+</RelativeLayout>
