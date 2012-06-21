@@ -39,8 +39,6 @@ public class AccountActivity extends SherlockFragmentActivity {
         if (null != savedInstanceState) {
             getSupportActionBar().setSelectedNavigationItem(savedInstanceState.getInt("tab"));
         }
-
-        initDialog();
     }
 
     @Override
@@ -63,7 +61,7 @@ public class AccountActivity extends SherlockFragmentActivity {
                 break;
 
             case R.id.menu_logout:
-                logoutAlertDialog.show();
+                showLogoutDialog();
                 break;
         }
 
@@ -98,24 +96,29 @@ public class AccountActivity extends SherlockFragmentActivity {
         });
     }
 
-    private void initDialog() {
-        logoutAlertDialog = new AlertDialog.Builder(this)
-                .setMessage(R.string.logout_dialog_message)
-                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                })
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Session.getInstance().destroy();
-                        dialogInterface.dismiss();
-                        finish();
-                    }
-                })
-                .create();
+    private void showLogoutDialog() {
+        if (null == logoutAlertDialog) {
+            logoutAlertDialog = new AlertDialog.Builder(this)
+                    .setTitle(R.string.logout_dialog_title)
+                    .setMessage(R.string.logout_dialog_message)
+                    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                        }
+                    })
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            Session.getInstance().destroy();
+                            dialogInterface.dismiss();
+                            finish();
+                        }
+                    })
+                    .create();
+        }
+
+        logoutAlertDialog.show();
     }
 
     public static enum Tab {

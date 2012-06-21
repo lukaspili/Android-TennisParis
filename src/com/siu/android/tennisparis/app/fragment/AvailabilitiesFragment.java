@@ -54,9 +54,7 @@ public class AvailabilitiesFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
         initList();
-        initDialog();
     }
 
     private void initList() {
@@ -80,26 +78,31 @@ public class AvailabilitiesFragment extends Fragment {
                 }
 
                 selectedAvailability = availabilityListAdapter.getItem(i);
-                reservationAlertDialog.show();
+                showDialog();
             }
         });
     }
 
-    private void initDialog() {
-        reservationAlertDialog = new AlertDialog.Builder(getActivity())
-                .setMessage(R.string.reservation_dialog_message)
-                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                })
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                })
-                .create();
+    private void showDialog() {
+        if (null == reservationAlertDialog) {
+            reservationAlertDialog = new AlertDialog.Builder(getActivity())
+                    .setTitle(R.string.reservation_dialog_title)
+                    .setMessage(R.string.reservation_dialog_message)
+                    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                        }
+                    })
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                        }
+                    })
+                    .create();
+        }
+
+        reservationAlertDialog.show();
     }
 }

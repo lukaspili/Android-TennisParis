@@ -30,10 +30,9 @@
 
     <string name="account_menu_logout">Déconnexion</string>
 
+    <string name="logout_dialog_title">Deconnexion</string>
     <string name="logout_dialog_message">Etes-vous sur de vouloir vous déconnecter ?</string>
 
-    <string name="reservation_dialog_message">Etes-vous sur de vouloir réserver sur ce créneau horaire ?
-        Toute réservation effectuée précedemment sera annulée
-        (Il n\'est pas possible d\'avoir plusieurs réservations simultanées).
-    </string>
+    <string name="reservation_dialog_title">Reservation</string>
+    <string name="reservation_dialog_message">Toute réservation effectuée précedemment sera annulée.</string>
 </resources>
