@@ -75,7 +75,7 @@ public class AccountActivity extends SherlockFragmentActivity {
 
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
 
-        actionBar.setListNavigationCallbacks(new ArrayAdapter<Tab>(this, android.R.layout.simple_spinner_dropdown_item, Tab.values()), new ActionBar.OnNavigationListener() {
+        actionBar.setListNavigationCallbacks(new ArrayAdapter<Tab>(this, android.R.layout.simple_dropdown_item_1line, Tab.values()), new ActionBar.OnNavigationListener() {
             @Override
             public boolean onNavigationItemSelected(int itemPosition, long itemId) {
                 Tab tab = Tab.values()[itemPosition];
