@@ -1,6 +1,6 @@
 <resources>
-    <style name="Theme.App" parent="Theme.Sherlock.Light">
-        <item name="homeAsUpIndicator">@drawable/button_navigation_back</item>
-        <item name="android:homeAsUpIndicator">@drawable/button_navigation_back</item>
+    <style name="Theme.App" parent="Theme.Sherlock.Light.ForceOverflow">
+        <!--<item name="homeAsUpIndicator">@drawable/button_navigation_back</item>-->
+        <!--<item name="android:homeAsUpIndicator">@drawable/button_navigation_back</item>-->
     </style>
 </resources>

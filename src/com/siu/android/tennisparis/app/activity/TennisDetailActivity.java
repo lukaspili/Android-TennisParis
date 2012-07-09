@@ -7,7 +7,6 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.Window;
 import com.siu.android.tennisparis.R;
@@ -84,12 +83,6 @@ public class TennisDetailActivity extends SherlockFragmentActivity {
         if (availabilitiesPerDay.isEmpty() && null == availabilityLoadTask) {
             loadAvailabilities();
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getSupportMenuInflater().inflate(R.menu.tennis_detail_menu, menu);
-        return true;
     }
 
     @Override

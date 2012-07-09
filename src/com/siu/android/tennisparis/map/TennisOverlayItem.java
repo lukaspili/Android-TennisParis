@@ -1,8 +1,8 @@
 package com.siu.android.tennisparis.map;
 
 import com.google.android.maps.OverlayItem;
+import com.siu.android.andgapisutils.util.LocationUtils;
 import com.siu.android.tennisparis.dao.model.Tennis;
-import com.siu.android.tennisparis.util.LocationUtils;
 
 /**
  * @author Lukasz Piliszczuk <lukasz.pili AT gmail.com>

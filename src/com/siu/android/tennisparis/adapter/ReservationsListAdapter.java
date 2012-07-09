@@ -6,9 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import com.siu.android.andutils.util.DateUtils;
 import com.siu.android.tennisparis.R;
 import com.siu.android.tennisparis.model.Reservation;
-import com.siu.android.tennisparis.util.DateUtils;
 
 import java.util.List;
 

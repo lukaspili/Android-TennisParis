@@ -5,6 +5,9 @@ import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import com.google.gson.reflect.TypeToken;
+import com.siu.android.andutils.util.CryptoUtils;
+import com.siu.android.andutils.util.HttpUtils;
+import com.siu.android.andutils.util.NetworkUtils;
 import com.siu.android.tennisparis.Application;
 import com.siu.android.tennisparis.R;
 import com.siu.android.tennisparis.app.activity.TennisDetailActivity;
@@ -13,10 +16,7 @@ import com.siu.android.tennisparis.dao.model.AvailabilityDao;
 import com.siu.android.tennisparis.dao.model.Tennis;
 import com.siu.android.tennisparis.database.DatabaseHelper;
 import com.siu.android.tennisparis.json.GsonFormatter;
-import com.siu.android.tennisparis.util.NetworkUtils;
-import com.siu.android.tennisparis.util.StringUtils;
-import com.siu.android.tennisparis.util.UrlUtils;
-import org.apache.commons.codec2.digest.DigestUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -61,14 +61,14 @@ public class AvailabilityLoadTask extends AsyncTask<Void, Void, List<List<Availa
     }
 
     private List<Availability> getWeb() {
-        String data = UrlUtils.downloadData(Application.getContext().getString(R.string.webservice_availabilites_url));
+        String data = HttpUtils.get(Application.getContext().getString(R.string.webservice_availabilites_url));
 
         if (StringUtils.isEmpty(data)) {
             return getLocal();
         }
 
         // data successfully downloaded, compare md5
-        final String currentMd5 = DigestUtils.md5Hex(data);
+        final String currentMd5 = CryptoUtils.md5Hex(data);
         final String existingMd5 = sharedPreferences.getString(Application.getContext().getString(R.string.application_preferences_availabilities_md5), "");
 
         Log.d(getClass().getName(), "Availability current md5 = " + currentMd5);

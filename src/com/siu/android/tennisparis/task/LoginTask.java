@@ -1,7 +1,7 @@
 package com.siu.android.tennisparis.task;
 
 import android.os.AsyncTask;
-import com.siu.android.tennisparis.app.fragment.LoginDialogFragment;
+import com.siu.android.tennisparis.app.dialog.LoginDialogWrapper;
 import com.siu.android.tennisparis.model.User;
 
 /**
@@ -11,12 +11,12 @@ public class LoginTask extends AsyncTask<Void, Void, User> {
 
     private String login;
     private String password;
-    private LoginDialogFragment fragment;
+    private LoginDialogWrapper callback;
 
-    public LoginTask(String login, String password, LoginDialogFragment fragment) {
+    public LoginTask(String login, String password, LoginDialogWrapper callback) {
         this.login = login;
         this.password = password;
-        this.fragment = fragment;
+        this.callback = callback;
     }
 
     @Override
@@ -24,7 +24,7 @@ public class LoginTask extends AsyncTask<Void, Void, User> {
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
         }
 
         User user = new User(login, password);
@@ -37,6 +37,6 @@ public class LoginTask extends AsyncTask<Void, Void, User> {
 
     @Override
     protected void onPostExecute(User user) {
-        fragment.onLoginTaskFinish(user);
+        callback.onLoginTaskFinished(user);
     }
 }

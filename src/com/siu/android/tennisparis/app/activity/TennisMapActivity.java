@@ -1,5 +1,6 @@
 package com.siu.android.tennisparis.app.activity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
@@ -8,24 +9,23 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.Window;
 import com.google.android.apps.analytics.easytracking.EasyTracker;
 import com.google.android.maps.GeoPoint;
+import com.siu.android.andgapisutils.activity.ads.AdsSherlockMapActivity;
+import com.siu.android.andgapisutils.util.LocationUtils;
 import com.siu.android.tennisparis.R;
 import com.siu.android.tennisparis.Session;
 import com.siu.android.tennisparis.adapter.TennisListAdapter;
-import com.siu.android.tennisparis.app.fragment.LoginDialogFragment;
+import com.siu.android.tennisparis.app.dialog.LoginDialog;
 import com.siu.android.tennisparis.dao.model.Tennis;
 import com.siu.android.tennisparis.map.EnhancedMapView;
 import com.siu.android.tennisparis.map.TennisOverlay;
 import com.siu.android.tennisparis.task.CurrentLocationTask;
 import com.siu.android.tennisparis.task.TennisLoadTask;
 import com.siu.android.tennisparis.toast.AppToast;
-import com.siu.android.tennisparis.util.FragmentUtils;
-import com.siu.android.tennisparis.util.LocationUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +34,7 @@ import java.util.List;
  * @author Lukasz Piliszczuk <lukasz.pili AT gmail.com>
  */
 @SuppressWarnings("deprecation")
-public class TennisMapActivity extends SherlockFragmentActivity {
+public class TennisMapActivity extends AdsSherlockMapActivity {
 
     private EnhancedMapView mapView;
     private ListView listView;
@@ -60,7 +60,7 @@ public class TennisMapActivity extends SherlockFragmentActivity {
 
         initActionBar();
 
-        RetainInstance retainInstance = (RetainInstance) getLastCustomNonConfigurationInstance();
+        RetainInstance retainInstance = (RetainInstance) getLastNonConfigurationInstance();
         if (null != retainInstance) {
             tennises = (ArrayList<Tennis>) savedInstanceState.getSerializable("tennises");
             getSupportActionBar().setSelectedNavigationItem(savedInstanceState.getInt("tab"));
@@ -124,7 +124,7 @@ public class TennisMapActivity extends SherlockFragmentActivity {
     }
 
     @Override
-    public Object onRetainCustomNonConfigurationInstance() {
+    public Object onRetainNonConfigurationInstance() {
         RetainInstance retainInstance = new RetainInstance();
 
         currentLocationTask.setActivity(null);
@@ -162,7 +162,7 @@ public class TennisMapActivity extends SherlockFragmentActivity {
 
             case R.id.menu_login:
                 if (!Session.getInstance().isLogged()) {
-                    FragmentUtils.showDialog(getSupportFragmentManager(), new LoginDialogFragment());
+                    showDialog(1);
                     return true;
                 }
 
@@ -174,6 +174,11 @@ public class TennisMapActivity extends SherlockFragmentActivity {
         }
 
         return true;
+    }
+
+    @Override
+    protected Dialog onCreateDialog(int id) {
+        return new LoginDialog(this);
     }
 
     private void initActionBar() {

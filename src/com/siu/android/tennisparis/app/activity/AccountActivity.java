@@ -122,7 +122,8 @@ public class AccountActivity extends SherlockFragmentActivity {
     }
 
     public static enum Tab {
-        PROFILE(Application.getContext().getString(R.string.account_tab_profile)), RESERVATIONS(Application.getContext().getString(R.string.account_tab_reservations));
+        RESERVATIONS(Application.getContext().getString(R.string.account_tab_reservations)),
+        PROFILE(Application.getContext().getString(R.string.account_tab_profile));
 
         private String title;
 

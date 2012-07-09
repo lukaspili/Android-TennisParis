@@ -5,6 +5,9 @@ import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import com.google.gson.reflect.TypeToken;
+import com.siu.android.andutils.util.CryptoUtils;
+import com.siu.android.andutils.util.HttpUtils;
+import com.siu.android.andutils.util.NetworkUtils;
 import com.siu.android.tennisparis.Application;
 import com.siu.android.tennisparis.R;
 import com.siu.android.tennisparis.app.activity.TennisMapActivity;
@@ -12,10 +15,7 @@ import com.siu.android.tennisparis.dao.model.Tennis;
 import com.siu.android.tennisparis.dao.model.TennisDao;
 import com.siu.android.tennisparis.database.DatabaseHelper;
 import com.siu.android.tennisparis.json.GsonFormatter;
-import com.siu.android.tennisparis.util.NetworkUtils;
-import com.siu.android.tennisparis.util.StringUtils;
-import com.siu.android.tennisparis.util.UrlUtils;
-import org.apache.commons.codec2.digest.DigestUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Iterator;
 import java.util.List;
@@ -52,12 +52,12 @@ public class TennisLoadTask extends AsyncTask<Void, Void, List<Tennis>> {
     }
 
     public List<Tennis> getWeb() {
-        String data = UrlUtils.downloadData(Application.getContext().getString(R.string.webservice_tennis_url));
+        String data = HttpUtils.get(Application.getContext().getString(R.string.webservice_tennis_url));
         if (StringUtils.isEmpty(data)) {
             return getLocal();
         }
 
-        final String currentMd5 = DigestUtils.md5Hex(data);
+        final String currentMd5 = CryptoUtils.md5Hex(data);
         final String existingMd5 = sharedPreferences.getString(Application.getContext().getString(R.string.application_preferences_tennis_md5), "");
 
         Log.d(getClass().getName(), "Tennis current md5 = " + currentMd5);

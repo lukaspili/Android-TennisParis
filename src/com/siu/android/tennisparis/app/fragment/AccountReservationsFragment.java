@@ -9,10 +9,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import com.siu.android.andutils.util.FragmentUtils;
 import com.siu.android.tennisparis.R;
 import com.siu.android.tennisparis.adapter.ReservationsListAdapter;
 import com.siu.android.tennisparis.model.Reservation;
-import com.siu.android.tennisparis.util.FragmentUtils;
 
 import java.util.ArrayList;
 import java.util.Date;

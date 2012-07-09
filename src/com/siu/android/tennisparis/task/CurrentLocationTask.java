@@ -20,8 +20,7 @@ public class CurrentLocationTask {
 
     private TennisMapActivity activity;
     private LocationManager locationManager;
-    private LocationListener gpsLocationListener = new LocationListener();
-    private LocationListener networkLocationListener = new LocationListener();
+    private LocationListener locationListener = new LocationListener();
     private Listener lastLocationHandler = new Listener();
     private Timer getLastLocationTaskTimer;
     private boolean running;
@@ -35,18 +34,14 @@ public class CurrentLocationTask {
         Log.d(getClass().getName(), "CurrentLocationTask");
         running = true;
 
-        if (!isGpsEnabled() && !isNetworkEnabled()) {
+        if (isGpsEnabled()) {
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+        } else if (isNetworkEnabled()) {
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+        } else {
             Log.w(getClass().getName(), "Gps and network are disabled, cannot get current location");
             stopCurrentLocation();
             return;
-        }
-
-        if (isGpsEnabled()) {
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, gpsLocationListener);
-        }
-
-        if (isNetworkEnabled()) {
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, networkLocationListener);
         }
 
         if (null != getLastLocationTaskTimer) {
@@ -64,8 +59,7 @@ public class CurrentLocationTask {
             getLastLocationTaskTimer.cancel();
         }
 
-        locationManager.removeUpdates(gpsLocationListener);
-        locationManager.removeUpdates(networkLocationListener);
+        locationManager.removeUpdates(locationListener);
     }
 
     private boolean isGpsEnabled() {

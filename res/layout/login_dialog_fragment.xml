@@ -3,13 +3,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="fill_parent" android:layout_height="fill_parent">
 
-    <TextView android:id="@+id/login_dialog_fragment_title"
-              android:layout_width="fill_parent" android:layout_height="wrap_content"
-              android:layout_alignParentTop="true"
-              android:paddingLeft="5dip" android:paddingTop="5dip" android:paddingBottom="15dip"
-              android:textSize="22sp"
-              android:text="@string/login_dialog_title"/>
-
     <LinearLayout android:id="@+id/login_dialog_fragment_buttons"
                   android:layout_width="fill_parent" android:layout_height="wrap_content"
                   android:layout_alignParentBottom="true">
@@ -26,7 +19,6 @@
     </LinearLayout>
 
     <ScrollView android:layout_width="fill_parent" android:layout_height="fill_parent"
-                android:layout_below="@id/login_dialog_fragment_title"
                 android:layout_above="@id/login_dialog_fragment_buttons">
 
         <RelativeLayout android:layout_width="fill_parent" android:layout_height="fill_parent"

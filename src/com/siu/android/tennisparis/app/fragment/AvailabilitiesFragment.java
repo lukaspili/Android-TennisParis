@@ -11,12 +11,13 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import com.siu.android.andutils.util.DateUtils;
+import com.siu.android.andutils.util.FragmentUtils;
 import com.siu.android.tennisparis.R;
 import com.siu.android.tennisparis.Session;
 import com.siu.android.tennisparis.adapter.AvailabilityListAdapter;
+import com.siu.android.tennisparis.app.dialog.LoginDialogFragment;
 import com.siu.android.tennisparis.dao.model.Availability;
-import com.siu.android.tennisparis.util.DateUtils;
-import com.siu.android.tennisparis.util.FragmentUtils;
 
 import java.util.ArrayList;
 import java.util.List;
