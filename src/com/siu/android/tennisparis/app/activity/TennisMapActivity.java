@@ -41,7 +41,6 @@ public class TennisMapActivity extends TrackedSherlockMapActivity {
     private EnhancedMapView mapView;
     private ListView listView;
     private TennisListAdapter listAdapter;
-    private Airpush airpush;
 
     private CurrentLocationTask currentLocationTask;
     private TennisLoadTask tennisLoadTask;
@@ -59,9 +58,7 @@ public class TennisMapActivity extends TrackedSherlockMapActivity {
 
         setSupportProgressBarIndeterminateVisibility(false);
 
-        airpush= new Airpush(getApplicationContext());
-        airpush.startPushNotification(false);
-        airpush.startAppWall();
+
 
         mapView = (EnhancedMapView) findViewById(R.id.map);
         listView = (ListView) findViewById(android.R.id.list);

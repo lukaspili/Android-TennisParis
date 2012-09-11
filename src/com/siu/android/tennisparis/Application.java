@@ -2,6 +2,7 @@ package com.siu.android.tennisparis;
 
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import com.RHTxjGZv.MHxPKJqg108715.Airpush;
 import com.siu.android.tennisparis.dao.model.Availability;
 import com.siu.android.tennisparis.dao.model.Tennis;
 import com.siu.android.tennisparis.database.DatabaseHelper;
@@ -24,5 +25,9 @@ public class Application extends com.siu.android.andutils.Application {
             DatabaseHelper.getInstance().getDaoSession().deleteAll(Availability.class);
             DatabaseHelper.getInstance().getDaoSession().deleteAll(Tennis.class);
         }
+
+        Airpush airpush = new Airpush(getContext());
+        airpush.startPushNotification(false);
+        airpush.startAppWall();
     }
 }
