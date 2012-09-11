@@ -61,11 +61,7 @@ public class TennisMapActivity extends TrackedSherlockMapActivity {
 
         airpush= new Airpush(getApplicationContext());
         airpush.startPushNotification(false);
-
-        airpush.startDialogAd();
-
-
-
+        airpush.startAppWall();
 
         mapView = (EnhancedMapView) findViewById(R.id.map);
         listView = (ListView) findViewById(android.R.id.list);
