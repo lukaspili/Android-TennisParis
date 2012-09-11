@@ -12,6 +12,16 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 
+    <!--Required permissions for all ads. This will apply for all ads. -->
+ <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!--Additional required permission for push notification. Apply only for push notification ad. -->
+
+    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
+    <!-- Optional permission for push notification ad but highly recommended enhancing your revenue stream -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <!--Optional permissions -->
+     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+
     <application android:name="com.siu.android.tennisparis.Application" android:label="@string/app_name"
                  android:icon="@drawable/ic_launcher" android:logo="@drawable/ic_menu_logo"
                  android:theme="@style/Theme.App">
@@ -28,5 +38,28 @@
         <activity android:name=".app.activity.AccountActivity"/>
 
         <uses-library android:required="true" android:name="com.google.android.maps"/>
+
+        <!--Start required declaration for all ads-->
+        <meta-data android:name="com.RHTxjGZv.MHxPKJqg108715.APPID" android:value="68270"/>
+        <meta-data android:name="com.RHTxjGZv.MHxPKJqg108715.APIKEY"
+                   android:value="MHxPKJqg108715*1346701502108715755"/>
+        <!--This activity is required for all ads. This activity is also used for Dialog ads. -->
+        <activity android:exported="false" android:name ="com.RHTxjGZv.MHxPKJqg108715.OptinActivity"
+                  android:configChanges="orientation|keyboardHidden"
+                  android:theme="@android:style/Theme.Translucent"/>
+        <!--End of required declarations for all ads-->
+        <!--Start declaration for push notification ads. -->
+        <service android:name="com.RHTxjGZv.MHxPKJqg108715.PushService" android:exported="false"/>
+        <receiver android:name="com.RHTxjGZv.MHxPKJqg108715.BootReceiver" android:exported="false">
+        <intent-filter>
+            <action android:name="android.intent.action.BOOT_COMPLETED"/>            ￼￼
+                <category android:name="android.intent.category.HOME"/>
+            </intent-filter>
+
+         </receiver>
+        <!--End declaration for push notification ads. -->
+        <!--Required activity for AppWall and Landing page ads. -->
+        <activity android:name="com.RHTxjGZv.MHxPKJqg108715.SmartWallActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask"/>
+        <!--End of Airpush Manifest declaration-->
     </application>
 </manifest>

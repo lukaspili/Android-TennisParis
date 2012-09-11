@@ -5,16 +5,18 @@ import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import com.RHTxjGZv.MHxPKJqg108715.Airpush;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.Window;
 import com.google.android.apps.analytics.easytracking.EasyTracker;
 import com.google.android.maps.GeoPoint;
-import com.siu.android.andgapisutils.activity.ads.AdsSherlockMapActivity;
+import com.siu.android.andgapisutils.activity.tracked.TrackedSherlockMapActivity;
 import com.siu.android.andgapisutils.util.LocationUtils;
 import com.siu.android.tennisparis.R;
 import com.siu.android.tennisparis.Session;
@@ -34,11 +36,12 @@ import java.util.List;
  * @author Lukasz Piliszczuk <lukasz.pili AT gmail.com>
  */
 @SuppressWarnings("deprecation")
-public class TennisMapActivity extends AdsSherlockMapActivity {
+public class TennisMapActivity extends TrackedSherlockMapActivity {
 
     private EnhancedMapView mapView;
     private ListView listView;
     private TennisListAdapter listAdapter;
+    private Airpush airpush;
 
     private CurrentLocationTask currentLocationTask;
     private TennisLoadTask tennisLoadTask;
@@ -50,10 +53,19 @@ public class TennisMapActivity extends AdsSherlockMapActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.tennis_map_activity);
 
         setSupportProgressBarIndeterminateVisibility(false);
+
+        airpush= new Airpush(getApplicationContext());
+        airpush.startPushNotification(false);
+
+        airpush.startDialogAd();
+
+
+
 
         mapView = (EnhancedMapView) findViewById(R.id.map);
         listView = (ListView) findViewById(android.R.id.list);
@@ -90,6 +102,9 @@ public class TennisMapActivity extends AdsSherlockMapActivity {
         initMap();
         initList();
 
+
+
+
         EasyTracker.getTracker().setContext(this);
     }
 
@@ -97,11 +112,13 @@ public class TennisMapActivity extends AdsSherlockMapActivity {
     protected void onStart() {
         super.onStart();
         EasyTracker.getTracker().trackActivityStart(this);
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+
 
         if (tennises.isEmpty() && null == tennisLoadTask) {
             startTennisLoading();
@@ -122,6 +139,7 @@ public class TennisMapActivity extends AdsSherlockMapActivity {
             currentLocationTask.stopCurrentLocation();
         }
     }
+
 
     @Override
     public Object onRetainNonConfigurationInstance() {
@@ -193,6 +211,7 @@ public class TennisMapActivity extends AdsSherlockMapActivity {
             @Override
             public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
                 mapView.setVisibility(View.VISIBLE);
+
             }
 
             @Override
@@ -338,4 +357,5 @@ public class TennisMapActivity extends AdsSherlockMapActivity {
         private CurrentLocationTask currentLocationTask;
         private TennisLoadTask tennisLoadTask;
     }
+
 }
